@@ -1,5 +1,3 @@
-??? from here until ???END lines may have been inserted/deleted
-
 #
 #
 # configuration file - contains customization for exact system
@@ -26,4 +24,3 @@ PingableRouterAddress = "192.168.1.1"
 WeatherUnderground_Present = False
 WeatherUnderground_StationID = "KWXXXXX"
 WeatherUnderground_StationKey = "YYYYYYY"
-???END
