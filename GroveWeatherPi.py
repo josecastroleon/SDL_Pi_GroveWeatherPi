@@ -1590,7 +1590,7 @@ while True:
 	
 	# process Interrupts from Lightning
 
-	if (as3935Interrupt == True):
+	if ((config.Lightning_Mode == True) and (as3935Interrupt == True)):
 
 		try:
 			process_as3935_interrupt()
