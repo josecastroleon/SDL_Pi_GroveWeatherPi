@@ -41,7 +41,7 @@ try:
 except ImportError:
 	import config
 
-if (config.enable_MySQL_Logging == True):
+if (config.enable_MySQL_Logging):
 	import MySQLdb as mdb
 
 import SDL_DS3231
