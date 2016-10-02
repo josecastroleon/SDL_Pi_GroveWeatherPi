@@ -206,15 +206,15 @@ def sampleAndDisplay():
 	currentWindGust = weatherStation.get_wind_gust()
 	totalRain = totalRain + weatherStation.get_current_rain_total()
 
-	print("Rain Total=\t%0.2f in")%(totalRain/25.4)
-	print("Wind Speed=\t%0.2f MPH")%(currentWindSpeed/1.6)
-	print("MPH wind_gust=\t%0.2f MPH")%(currentWindGust/1.6)
+	print("Rain Total=\t%0.2f mm")%(totalRain)
+	print("Wind Speed=\t%0.2f KMH")%(currentWindSpeed)
+	print("KMH wind_gust=\t%0.2f KMH")%(currentWindGust)
   	
 	print "Wind Direction=\t\t\t %0.2f Degrees" % weatherStation.current_wind_direction()
 	print "Wind Direction Voltage=\t\t %0.3f V" % weatherStation.current_wind_direction_voltage()
 	
-	Scroll_SSD1306.addLineOLED(display,  ("Wind Speed=\t%0.2f MPH")%(currentWindSpeed/1.6))
-	Scroll_SSD1306.addLineOLED(display,  ("Rain Total=\t%0.2f in")%(totalRain/25.4))
+	Scroll_SSD1306.addLineOLED(display,  ("Wind Speed=\t%0.2f KMH")%(currentWindSpeed))
+	Scroll_SSD1306.addLineOLED(display,  ("Rain Total=\t%0.2f mm")%(totalRain))
 	Scroll_SSD1306.addLineOLED(display,  "Wind Dir=%0.2f Degrees" % weatherStation.current_wind_direction())
 	
 	print "----------------- "
