@@ -27,11 +27,9 @@ sys.path.append('./RTC_SDL_DS3231')
 sys.path.append('./Adafruit_Python_BMP')
 sys.path.append('./Adafruit_Python_GPIO')
 sys.path.append('./SDL_Pi_WeatherRack')
-sys.path.append('./graphs')
 
 import subprocess
 import RPi.GPIO as GPIO
-import doAllGraphs
 import smbus
 import struct
 import urllib2 
@@ -102,71 +100,7 @@ from tentacle_pi.AM2315 import AM2315
 am2315 = AM2315(0x5c,"/dev/i2c-1")
 outsideTemperature, outsideHumidity, crc_check = am2315.sense() 
 
-# Main Loop - sleeps 10 seconds
-# command from RasPiConnect Execution Code
-def completeCommand():
-	f = open("/home/pi/SDL_Pi_GroveWeatherPi/state/WeatherCommand.txt", "w")
-	f.write("DONE")
-	f.close()
-
-def completeCommandWithValue(value):
-	f = open("/home/pi/SDL_Pi_GroveWeatherPi/state/WeatherCommand.txt", "w")
-	f.write(value)
-	f.close()
-
-def processCommand():
-	f = open("//home/pi/SDL_Pi_GroveWeatherPi/state/WeatherCommand.txt", "r")
-	command = f.read()
-	f.close()
-
-	if (command == "") or (command == "DONE"):
-		# Nothing to do
-		return False
-
-	# Check for our commands
-	print "Processing Command: ", command
-	if (command == "SAMPLEWEATHER"):
-		sampleWeather()
-		completeCommand()
-		writeWeatherStats()
-		return True
-
-	if (command == "SAMPLEBOTH"):
-		sampleWeather()
-		completeCommand()
-		writeWeatherStats()
-		return True
-
-	if (command == "SAMPLEBOTHGRAPHS"):
-		sampleWeather()
-		completeCommand()
-		writeWeatherStats()
-		doAllGraphs.doAllGraphs()
-		return True
-			
-	completeCommand()
-	return False
-
-
 # Main Program
-
-# write weather stats out to file
-def writeWeatherStats():
-	f = open("/home/pi/SDL_Pi_GroveWeatherPi/state/WeatherStats.txt", "w")
-	f.write(str(totalRain) + '\n') 
-	f.write(str(currentWindSpeed) + '\n')
-	f.write(str(currentWindGust) + '\n')
-	f.write(str(totalRain)  + '\n')
-	f.write(str(bmp180Temperature)  + '\n')
-	f.write(str(bmp180Pressure) + '\n')
-	f.write(str(bmp180Altitude) + '\n')
-	f.write(str(bmp180SeaLevel)  + '\n')
-	f.write(str(outsideTemperature) + '\n')
-	f.write(str(outsideHumidity) + '\n')
-	f.write(str(currentWindDirection) + '\n')
-	f.write(str(currentWindDirectionVoltage) + '\n')
-	f.close()
-
 
 # sample and display
 totalRain = 0
@@ -228,7 +162,7 @@ def sampleAndDisplay():
 	print "DS3231 Temperature= \t%0.2f C" % ds3231.getTemp()
 
 	print "----------------- "
-	print "SecondCount=", secondCount
+	print "10SecCount=", secondCount
 
 	print "----------------- "
 	print " BMP280 Barometer"
@@ -289,8 +223,7 @@ def totalRainArray():
 	return total
 
 print ""
-print "GroveWeatherPi Solar Powered Weather Station Version 2.2 - SwitchDoc Labs"
-print ""
+print "GroveWeatherPi Weather Station Version 2.2 - SwitchDoc Labs"
 print ""
 print "Program Started at:"+ time.strftime("%Y-%m-%d %H:%M:%S")
 print ""
@@ -305,15 +238,11 @@ sendemail.sendEmail("test", "GroveWeatherPi Startup \n", "The GroveWeatherPi Ras
 
 secondCount = 1
 while True:
-	# process commands from RasPiConnect
-	processCommand()
-
     # print every 10 seconds
-	if ((secondCount % 10) == 0):
-		sampleAndDisplay()		
+	sampleAndDisplay()		
 
     # every 5 minutes, push data to mysql and check for shutdown
-	if ((secondCount % (5*60)) == 0):
+	if ((secondCount % (30)) == 0):
 		sampleWeather()
 		if (config.enable_MySQL_Logging):
 			writeWeatherRecord()
@@ -323,15 +252,9 @@ while True:
 		lastRainReading = totalRain
 		print "rain in past 60 minute=",rain60Minutes
 
-	# every 15 minutes, build new graphs
-	if ((secondCount % (15*60)) == 0):
-		# print every 900 seconds
-		sampleWeather()
-		doAllGraphs.doAllGraphs()
-
 	secondCount = secondCount + 1
 	# reset secondCount to prevent overflow forever
 	if (secondCount == 1000001):
 		secondCount = 1	
 
-	time.sleep(1.0)
+	time.sleep(10.0)
