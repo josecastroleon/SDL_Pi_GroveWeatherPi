@@ -14,7 +14,7 @@ fromAddress = "yourfromaddress@example.com"
 
 #MySQL Logging and Password Information
 
-enable_MySQL_Logging = True
+enable_MySQL_Logging = False
 MySQL_Password = "password"
 
 # modify this IP to enable WLAN operating detection  - search for WLAN_check in GroveWeatherPi.py
