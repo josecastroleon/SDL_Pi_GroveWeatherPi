@@ -1,11 +1,10 @@
 def sendEmail(source, message, subject, toaddress, fromaddress, filename):
 	# if conflocal.py is not found, import default config.py
-	
 	# Check for user imports
 	try:
-        import conflocal as config
+		import conflocal as config
 	except ImportError:
-     	import config
+		import config
 
 	# Import smtplib for the actual sending function
 	import smtplib
@@ -32,10 +31,10 @@ def sendEmail(source, message, subject, toaddress, fromaddress, filename):
 	# Open the files in binary mode.  Let the MIMEImage class automatically
 	# guess the specific image type.
 	if (filename != ""):
-        fp = open(filename, 'rb')
-        img = MIMEImage(fp.read())
-        fp.close()
-        msg.attach(img)
+		fp = open(filename, 'rb')
+		img = MIMEImage(fp.read())
+		fp.close()
+		msg.attach(img)
 
 	# Send the email via our own SMTP server.
 	try:

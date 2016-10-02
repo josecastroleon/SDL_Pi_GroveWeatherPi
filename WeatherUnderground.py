@@ -9,9 +9,9 @@ import httplib
 
 # Check for user imports
 try:
-    import conflocal as config
+	import conflocal as config
 except ImportError:
-    import config
+	import config
 
 
 def sendWeatherUndergroundData(currentWindSpeed, currentWindGust, totalRain, bmp180Temperature, bmp180Pressure, bmp180Altitude,  bmp180SeaLevel, outsideTemperature, outsideHumidity, crc_check, currentWindDirection, currentWindDirectionVoltage, rain60Minutes): 
