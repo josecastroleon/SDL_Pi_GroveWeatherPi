@@ -1,12 +1,11 @@
 def sendEmail(source, message, subject, toaddress, fromaddress, filename):
-
 	# if conflocal.py is not found, import default config.py
-
+	
 	# Check for user imports
 	try:
-     		import conflocal as config
+        import conflocal as config
 	except ImportError:
-     		import config
+     	import config
 
 	# Import smtplib for the actual sending function
 	import smtplib
@@ -25,22 +24,20 @@ def sendEmail(source, message, subject, toaddress, fromaddress, filename):
 	# family = the list of all recipients' email addresses
 	msg['From'] = fromaddress
 	msg['To'] =  toaddress
-	#msg.attach(message) 
 
 	mainbody = MIMEText(message, 'plain')
 	msg.attach(mainbody)
 
 	# Assume we know that the image files are all in PNG format
-    	# Open the files in binary mode.  Let the MIMEImage class automatically
-       	# guess the specific image type.
+	# Open the files in binary mode.  Let the MIMEImage class automatically
+	# guess the specific image type.
 	if (filename != ""):
-    		fp = open(filename, 'rb')
-       		img = MIMEImage(fp.read())
-    		fp.close()
-        	msg.attach(img)
+        fp = open(filename, 'rb')
+        img = MIMEImage(fp.read())
+        fp.close()
+        msg.attach(img)
 
 	# Send the email via our own SMTP server.
-
 	try:
 		# open up a line with the server
 		s = smtplib.SMTP("smtp.gmail.com", 587)
@@ -51,14 +48,7 @@ def sendEmail(source, message, subject, toaddress, fromaddress, filename):
 		# login, send email, logout
 		s.login(config.mailUser, config.mailPassword)
 		s.sendmail(config.mailUser, toaddress, msg.as_string())
-		#s.close()
-
-
 		s.quit()
-
 	except:
-		
 		print("sendmail exception raised")
 	return 0
-
-

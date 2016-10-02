@@ -25,29 +25,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `PowerSystem`
---
-
-DROP TABLE IF EXISTS `PowerSystem`;
-CREATE TABLE IF NOT EXISTS `PowerSystem` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `TimeStamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `batteryVoltage` float NOT NULL,
-  `batteryCurrent` float NOT NULL,
-  `solarVoltage` float NOT NULL,
-  `solarCurrent` float NOT NULL,
-  `loadVoltage` float NOT NULL,
-  `loadCurrent` float NOT NULL,
-  `batteryPower` float NOT NULL,
-  `solarPower` float NOT NULL,
-  `loadPower` float NOT NULL,
-  `batteryCharge` float NOT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16170 ;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `systemlog`
 --
 
@@ -71,16 +48,12 @@ DROP TABLE IF EXISTS `WeatherData`;
 CREATE TABLE IF NOT EXISTS `WeatherData` (
   `ID` int(20) NOT NULL AUTO_INCREMENT,
   `TimeStamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `as3935LightningCount` float NOT NULL,
-  `as3935LastInterrupt` float NOT NULL,
-  `as3935LastDistance` float NOT NULL,
-  `as3935LastStatus` varchar(200) NOT NULL,
   `currentWindSpeed` float NOT NULL,
   `currentWindGust` float NOT NULL,
   `currentWindDirection` float NOT NULL,
   `currentWindDirectionVoltage` float NOT NULL,
   `totalRain` float NOT NULL,
-  `bmp180Temperature` int(20) NOT NULL,
+  `bmp180Temperature` float NOT NULL,
   `bmp180Pressure` float NOT NULL,
   `bmp180Altitude` float NOT NULL,
   `bmp180SeaLevel` float NOT NULL,
