@@ -58,24 +58,24 @@ if (config.enable_MySQL_Logging == True):
 
 #indicate interrupt has happened from as3936
 
-as3935_Interrupt_Happened = False;
+as3935_Interrupt_Happened = False
 # set to true if you are building the Weather Board project with Lightning Sensor
-config.Lightning_Mode = True
+config.Lightning_Mode = False
 
 # set to true if you are building the solar powered version
-config.SolarPower_Mode = True;
+config.SolarPower_Mode = False
 
 config.TCA9545_I2CMux_Present = False
 config.SunAirPlus_Present = False
 config.AS3935_Present = False
-config.DS3231_Present = False
-config.BMP280_Present = False
+config.DS3231_Present = True
+config.BMP280_Present = True
 config.FRAM_Present = False
 config.HTU21DF_Present = False
-config.AM2315_Present = False
+config.AM2315_Present = True
 config.ADS1015_Present = False
-config.ADS1115_Present = False
-config.OLED_Present = False
+config.ADS1115_Present = True
+config.OLED_Present = True
 config.WXLink_Present = False
 
 
@@ -190,8 +190,8 @@ except:
 # GPIO Numbering Mode GPIO.BCM
 #
 
-anemometerPin = 26
-rainPin = 21
+anemometerPin = 23
+rainPin = 24
 
 # constants
 
@@ -208,7 +208,7 @@ if (config.TCA9545_I2CMux_Present):
 	tca9545.write_control_register(TCA9545_CONFIG_BUS0)
 weatherStation = SDL_Pi_WeatherRack.SDL_Pi_WeatherRack(anemometerPin, rainPin, 0,0, SDL_MODE_I2C_ADS1015)
 
-weatherStation.setWindMode(SDL_MODE_SAMPLE, 5.0)
+weatherStation.setWindMode(SDL_MODE_SAMPLE, 3.3)
 #weatherStation.setWindMode(SDL_MODE_DELAY, 5.0)
 
 
