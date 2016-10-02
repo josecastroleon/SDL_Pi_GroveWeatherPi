@@ -208,7 +208,7 @@ if (config.TCA9545_I2CMux_Present):
 	tca9545.write_control_register(TCA9545_CONFIG_BUS0)
 weatherStation = SDL_Pi_WeatherRack.SDL_Pi_WeatherRack(anemometerPin, rainPin, 0,0, SDL_MODE_I2C_ADS1015)
 
-weatherStation.setWindMode(SDL_MODE_SAMPLE, 3.3)
+weatherStation.setWindMode(SDL_MODE_SAMPLE, 5.0)
 #weatherStation.setWindMode(SDL_MODE_DELAY, 5.0)
 
 

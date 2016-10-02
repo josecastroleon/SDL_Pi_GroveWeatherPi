@@ -67,7 +67,7 @@ def voltageToDegrees(value, defaultWindDirection):
     	# Note:  The original documentation for the wind vane says 16 positions.  Typically only recieve 8 positions.  And 315 degrees was wrong.
      
     	# For 5V, use 1.0.  For 3.3V use 0.66
-	ADJUST3OR5 = 1.0
+	ADJUST3OR5 = 0.66
 	PowerVoltage = 5.0
 
 
