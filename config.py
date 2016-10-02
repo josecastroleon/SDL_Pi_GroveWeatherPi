@@ -1,3 +1,4 @@
+??? from here until ???END lines may have been inserted/deleted
 
 #
 #
@@ -15,7 +16,11 @@ fromAddress = "yourfromaddress@example.com"
 #MySQL Logging and Password Information
 
 enable_MySQL_Logging = False
+MySQL_Url = 'localhost'
+MySQL_User = 'root'
 MySQL_Password = "password"
+MySQL_Database = 'GroveWeatherPi'
+
 
 # modify this IP to enable WLAN operating detection  - search for WLAN_check in GroveWeatherPi.py
 enable_WLAN_Detection = True
@@ -47,3 +52,4 @@ ADS1015_Present = False
 ADS1115_Present = False
 OLED_Present = False
 WXLink_Present = False
+???END
