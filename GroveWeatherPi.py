@@ -27,6 +27,7 @@ sys.path.append('./RTC_SDL_DS3231')
 sys.path.append('./Adafruit_Python_BMP')
 sys.path.append('./Adafruit_Python_GPIO')
 sys.path.append('./SDL_Pi_WeatherRack')
+sys.path.append('./max44009')
 
 import subprocess
 import RPi.GPIO as GPIO
@@ -50,6 +51,7 @@ import SDL_Pi_WeatherRack as SDL_Pi_WeatherRack
 import Adafruit_SSD1306
 import Scroll_SSD1306
 import WeatherUnderground
+import max44009
 
 #WeatherRack Weather Sensors
 #
@@ -85,6 +87,11 @@ ds3231.read_datetime()
 ################
 # BMP280 Setup 
 bmp280 = BMP280.BMP280()
+
+################
+# MAX44009 Setup
+max44k9 = max44009.MAX44009(1, 0x4a)
+max44k9.configure(0, 0, 0, 0)
 
 ################
 # OLED SSD_1306 Setup
@@ -127,10 +134,13 @@ def sampleWeather():
 		
 	# get AM2315 Outside Humidity and Outside Temperature
 	outsideTemperature, outsideHumidity, crc_check = am2315.sense()
+
+        # get MAX44009 Luminosity
+        solarradiation = max44k9.luminosity() * 0.0079
 		
 	print "--Sending Data to WeatherUnderground--"
 	if (config.config.WeatherUnderground_Present):
-		WeatherUnderground.sendWeatherUndergroundData(currentWindSpeed, currentWindGust, totalRain, bmp180Temperature, bmp180Pressure, bmp180Altitude,  bmp180SeaLevel, outsideTemperature, outsideHumidity, crc_check, currentWindDirection, currentWindDirectionVoltage, rain60Minutes )
+		WeatherUnderground.sendWeatherUndergroundData(currentWindSpeed, currentWindGust, totalRain, bmp180Temperature, bmp180Pressure, bmp180Altitude,  bmp180SeaLevel, outsideTemperature, outsideHumidity, crc_check, currentWindDirection, currentWindDirectionVoltage, rain60Minutes, solarradiation )
 
 
 def sampleAndDisplay():
@@ -171,6 +181,13 @@ def sampleAndDisplay():
 	print 'Pressure = \t{0:0.2f} KPa'.format(bmp280.read_pressure()/1000)
 	print 'Altitude = \t{0:0.2f} m'.format(bmp280.read_altitude())
 	print 'Sealevel Pressure = \t{0:0.2f} KPa'.format(bmp280.read_sealevel_pressure()/1000)
+
+        print "---------------------- "
+        print " MAX44009 Light Sensor"
+        print "---------------------- "
+        luminosity = max44k9.luminosity()
+        print 'Luminosity = \t{0:0.2f} lux'.format(luminosity)
+        print 'Solar radiation = \t{0:0.2f} W/m^2'.format(luminosity*0.0079)
 
 	print "----------------- "
 	print " AM2315 Temperature/Humidity Sensor"

@@ -14,7 +14,7 @@ except ImportError:
 	import config
 
 
-def sendWeatherUndergroundData(currentWindSpeed, currentWindGust, totalRain, bmp180Temperature, bmp180Pressure, bmp180Altitude,  bmp180SeaLevel, outsideTemperature, outsideHumidity, crc_check, currentWindDirection, currentWindDirectionVoltage, rain60Minutes): 
+def sendWeatherUndergroundData(currentWindSpeed, currentWindGust, totalRain, bmp180Temperature, bmp180Pressure, bmp180Altitude,  bmp180SeaLevel, outsideTemperature, outsideHumidity, crc_check, currentWindDirection, currentWindDirectionVoltage, rain60Minutes, solarradiation): 
 	# https://weatherstation.wunderground.com/weatherstation/updateweatherstation.php?ID=KCASANFR5&PASSWORD=XXXXXX&dateutc=2000-01-01+10%3A32%3A35&winddir=230&windspeedmph=12&windgustmph=12&tempf=70&rainin=0&baromin=29.1&dewptf=68.2&humidity=90&weather=&clouds=&softwaretype=vws%20versionxx&action=updateraw	
 
 	# build the URL
@@ -31,6 +31,7 @@ def sendWeatherUndergroundData(currentWindSpeed, currentWindGust, totalRain, bmp
 	myURL += "&tempf=%0.2f" % ((outsideTemperature*9.0/5.0)+32.0)
 	myURL += "&rainin=%0.2f" % ((rain60Minutes)/25.4)
 	myURL += "&baromin=%0.2f" % ((bmp180SeaLevel) * 0.2953)
+        myURL += "&solarradiation=%0.2f" % solarradiation
 	myURL += "&software=GroveWeatherPi"
 
 	#send it
